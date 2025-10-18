@@ -1,21 +1,20 @@
 import shutil
-import sys
 from pathlib import Path
 from simple_term_menu import TerminalMenu
+import sys
 
-def fetch_mp3(repo, ext):
+def fetch_mp3():
     files_found = []
-    home_dir = Path.home()
-    target_dir = Path(f"/home/blackjack/{repo}")
-    for item in home_dir.rglob(ext):
-        if item.parent != target_dir:
+    target_dir = Path.home() / sys.argv[1]
+    for item in Path.home().rglob(sys.argv[2]):
+        if not item.is_relative_to(target_dir):
             files_found.append(item)
     return files_found
 
 def main():
     files_moved = 0
-    files = fetch_mp3(sys.argv[1], sys.argv[2])
-    target_dir = Path(sys.argv[1])
+    files = fetch_mp3()
+    target_dir = Path.home() / sys.argv[1]
     options = TerminalMenu(
             [str(f) for f in files],
             multi_select=True,

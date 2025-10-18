@@ -3,7 +3,7 @@ from pathlib import Path
 from simple_term_menu import TerminalMenu
 import sys
 
-def fetch_mp3():
+def fetch():
     files_found = []
     target_dir = Path.home() / sys.argv[1]
     for item in Path.home().rglob(sys.argv[2]):
@@ -13,7 +13,7 @@ def fetch_mp3():
 
 def main():
     files_moved = 0
-    files = fetch_mp3()
+    files = fetch()
     target_dir = Path.home() / sys.argv[1]
     options = TerminalMenu(
             [str(f) for f in files],
